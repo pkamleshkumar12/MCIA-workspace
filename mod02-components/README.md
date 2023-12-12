@@ -51,3 +51,50 @@
         - API clients can be tested and “fail fast” before API implementations are created
             - Promotes parallel development and self-discovery of existing services and other reusable assets
         - Complex business objects and constraints are specified and agreed upon in the API specifications
+    
+    ---
+    
+    ## Event-driven API (AsyncAPI) support in Anypoint Platform
+    
+    - Event-driven APIs are supported in the Anypoint Platform through the **********AsycAPI********** specification
+    - Anypoint Platform provides tools to design, publish, and discover **************************event-driven APIs (AsyncAPI documents)**************************
+    - AsychAPI
+        - YAML-based language used to describe and document event-driven APIs is a machine-readable and human-readable format
+        - Open-source and protocol-agnostic
+            - Describe the event-driven API using four main concepts
+                - Message: Payload and optional headers exchanged with other services
+                - Channel: Destination to send or receive messages
+                    - Methods: PUBLISH, SUBSCRIBE
+                - Protocol and server: Technology to transport messages
+            - AsyncAPI document
+                - An event-driven API specification expressed in AsyncAPI
+        
+    
+    ![Untitled](2%20Identifying%20Anypoint%20Platform%20components%20and%20Cap%20b689c8d17bfa43e6867556f409633008/Untitled%204.png)
+    
+    ---
+    
+    ## Anypoint Flex Gateway
+    
+    ![Untitled](2%20Identifying%20Anypoint%20Platform%20components%20and%20Cap%20b689c8d17bfa43e6867556f409633008/Untitled%205.png)
+    
+    ![Untitled](2%20Identifying%20Anypoint%20Platform%20components%20and%20Cap%20b689c8d17bfa43e6867556f409633008/Untitled%206.png)
+    
+    ![Untitled](2%20Identifying%20Anypoint%20Platform%20components%20and%20Cap%20b689c8d17bfa43e6867556f409633008/Untitled%207.png)
+    
+    ![Untitled](2%20Identifying%20Anypoint%20Platform%20components%20and%20Cap%20b689c8d17bfa43e6867556f409633008/Untitled%208.png)
+    
+
+### Anypoint Mule Gateway Capabilities
+
+- ******************Mule Runtime******************  includes an embedded  ************************API Gateway************************
+    - Separates orchestration from implementation concerns
+    - Leverages the governance capabilities of API Manager
+    - Apply Policies on top of a Mule application, enrich an incoming/outgoing message, or add any other complex capability to an API without having to write any code
+- ****API Manager****  can auto-generate API proxy applications for API implementations based on a corresponding OAS or RAML API specification
+    - Even for REST implementations that are not Mule applications
+- The **API proxy** applications can be deployed to Runtime Fabric, CloudHub or customer-hosted Mule runtimes
+    
+    ![Untitled](2%20Identifying%20Anypoint%20Platform%20components%20and%20Cap%20b689c8d17bfa43e6867556f409633008/Untitled%209.png)
+    
+    ![Untitled](2%20Identifying%20Anypoint%20Platform%20components%20and%20Cap%20b689c8d17bfa43e6867556f409633008/Untitled%2010.png)
