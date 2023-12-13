@@ -19,6 +19,7 @@ Ensure you have the following tools installed on your machine:
 - [Java Development Kit (JDK)](https://openjdk.java.net/) - Version 1.8.0_392
 - [Apache Maven](https://maven.apache.org/) - Version 3.8.2
 - [Anypoint Studio](https://www.mulesoft.com/studio) - Version 7.15.0
+- [Mule server 4.4.0 EE]() - Version 4.4.0 EE
 
 ## Getting Started
 
