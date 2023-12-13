@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="combining-apisFlow" doc:id="6bc66da0-d51f-4e1c-8917-fce216ddc1db" >
+		<http:listener doc:name="Listener" doc:id="ac502fb2-79a0-437f-9f12-fb272c0d0691" />
+	</flow>
+	<flow name="combining-apisFlow1" doc:id="93a242d4-4ee0-4285-a79a-244c01d3d4cf" >
+		<http:request method="GET" doc:name="Request API A" doc:id="9333b8e1-6d8a-4dd8-9092-7acb5f4a7a6c" />
+		<http:request method="GET" doc:name="Request API B" doc:id="4b3ceff1-a696-4699-a6c8-fdff628fe3ef" />
+	</flow>
+	<flow name="combining-apisFlow2" doc:id="6c34f401-3e23-4998-aa2c-a591ec8d5a13" >
+		<scatter-gather doc:name="Customer Order API" doc:id="e779e5b2-a447-4be9-9064-6c1dd84242c1" >
+			<route >
+				<http:request method="GET" doc:name="Orders API" doc:id="e3f8e491-0b15-4a2b-acc4-34d0a03f148d" />
+			</route>
+			<route >
+				<http:request method="GET" doc:name="Customers API" doc:id="a712454d-2eb3-4fae-9a24-0eabdacfad46" />
+			</route>
+		</scatter-gather>
+	</flow>
+	<flow name="combining-apisFlow3" doc:id="b4b3cedc-be0a-4714-9a64-ac3f8ce1b4af" >
+		<first-successful doc:name="Address API" doc:id="307f895c-f989-418e-bdc9-c71ddf9d0086" >
+			<route >
+				<http:request method="GET" doc:name="Primary Address Validation API" doc:id="daad0248-3b16-4e10-b17b-1277d8c9d36c" />
+			</route>
+			<route >
+				<http:request method="GET" doc:name="Fallback Address Validation API" doc:id="8c6c0276-61f2-4f30-9313-bca1eec932c6" />
+			</route>
+		</first-successful>
+	</flow>
+	<flow name="combining-apisFlow4" doc:id="d3d9ec91-87ac-44b4-9904-d3a4648ac3a0" >
+		<round-robin doc:name="Round Robin" doc:id="7e2755c6-4202-48cd-a73e-7291bfebb126" >
+			<route >
+				<http:request method="GET" doc:name="ANZ Inventory API" doc:id="a691acf9-55a9-436f-9532-0fd10c9404ec" />
+			</route>
+			<route >
+				<http:request method="GET" doc:name="Japan Inventory API" doc:id="a273a1b3-fa8d-4478-a66d-46e7dd8b9819" />
+			</route>
+		</round-robin>
+	</flow>
+</mule>
