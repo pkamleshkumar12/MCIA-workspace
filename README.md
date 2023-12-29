@@ -43,7 +43,7 @@ https://docs.mulesoft.com/studio/latest/import-export-packages#import-projects-t
 
 3. [Designing integration solutions using Mule applications](mod03-designing/README.md)
 
-4. [Choosing appropriate Mule 4 processing models](mod03-processing-models/README.md)
+4. [Choosing appropriate Mule 4 processing models](mod04-processing-models/README.md)
 
 5. Choosing appropriate message transformation and routing patterns
 
