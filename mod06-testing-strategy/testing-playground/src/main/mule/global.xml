@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MuleSoft Training - Anypoint Platform Architecture: Integration Solutions
+
+  Copyright (C) 2021 MuleSoft, Inc. All rights reserved. https://www.mulesoft.com
+
+  The software in this package is published under the terms of the
+  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+  a copy of which has been included with this distribution in the LICENSE.txt file.
+-->
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="ca2f3da7-d3c1-4d16-b280-6a780ca14480" >
+		<http:listener-connection host="0.0.0.0" port="${http.port}" />
+	</http:listener-config>
+	
+	<http:request-config name="MuleSoft_Training_HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="d8b0c50c-7ffa-403c-8ac0-a18f7c8cec25" >
+		<http:request-connection host="training.mulesoft.com" port="80" />
+	</http:request-config>
+	 
+	<http:request-config name="MuleSoft_HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="b9a8b5fc-2781-4e3e-b1ac-dd3e764e7556" >
+		<http:request-connection host="www.mulesoft.com" port="80" />
+	</http:request-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="36289d8a-64ce-46b0-a2b2-2eca37b25452" file="config.yaml" />
+	
+</mule>

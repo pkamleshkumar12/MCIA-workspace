@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MuleSoft Training - Anypoint Platform Architecture: Integration Solutions
+
+  Copyright (C) 2021 MuleSoft, Inc. All rights reserved. https://www.mulesoft.com
+
+  The software in this package is published under the terms of the
+  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+  a copy of which has been included with this distribution in the LICENSE.txt file.
+-->
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="helloPayload" doc:id="d6a7fa2a-2f84-496c-8422-e52fde1f9490" >
+		<http:listener doc:name="/testing/helloPayload" doc:id="fcc0ba37-c948-4af5-8194-20604357a0bd" config-ref="HTTP_Listener_config" path="/testing/helloPayload"/>
+		<logger level="INFO" doc:name="Hello MUnit!" doc:id="2ba7bff9-297a-42cf-b8d7-0034cd313898" message="Hello MUnit!" category="testing-playground.helloInThePayload" />
+		<set-payload value='#["Hello MUnit!"]' doc:name="Hello MUnit!" doc:id="2b227d91-9f77-4377-8834-1de9447725c7" />
+	</flow>
+	<flow name="returnsAnError" doc:id="b5e58082-02d2-4c1a-b8bb-21ff6c715f05" >
+		<http:listener doc:name="/testing/returnsAnError" doc:id="acbe61da-65e1-45ab-87f4-fee491660336" config-ref="HTTP_Listener_config" path="/testing/returnsAnError"/>
+		<raise-error doc:name="TEST:ERROR" doc:id="f0e45a76-8db5-425f-8d9b-7b699d12c3c9" type="TEST:ERROR" description="An error occurred!"/>
+	</flow>
+	<flow name="needsAStringAsAPayload" doc:id="06778301-70d1-4774-964b-1df111fa7053" >
+		<http:listener doc:name="/testing/needsAStringAsAPayload" doc:id="b504b7b3-0945-46a0-ab8a-6e0cccd42345" config-ref="HTTP_Listener_config" path="/testing/needsAStringAsAPayload"/>
+		<ee:transform doc:name="assumes payload can be string concatenated" doc:id="d1cff582-6ed9-47b1-a303-8f2ea8f02059" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/java
+---
+//this code has branching logic 
+"I see " ++ ((payload default "null") as String) ++ " in the payload!"]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+	</flow>
+</mule>

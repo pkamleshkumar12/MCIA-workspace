@@ -1,0 +1,6 @@
+#Example application for Integration Solutions 
+
+
+#for the HTTP listener to be configurable
+http:
+  port: "8081"

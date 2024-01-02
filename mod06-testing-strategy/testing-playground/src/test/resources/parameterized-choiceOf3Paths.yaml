@@ -1,0 +1,9 @@
+hello:
+  inputPayload: "hello"
+  expectedPayload: "Hello back!"
+goodbye:
+  inputPayload: "goodbye"
+  expectedPayload: "Goodbye!"
+default:
+  inputPayload: "default"
+  expectedPayload: "I do not understand that"

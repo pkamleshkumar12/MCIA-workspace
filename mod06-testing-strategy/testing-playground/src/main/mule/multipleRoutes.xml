@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  MuleSoft Training - Anypoint Platform Architecture: Integration Solutions
+
+  Copyright (C) 2021 MuleSoft, Inc. All rights reserved. https://www.mulesoft.com
+
+  The software in this package is published under the terms of the
+  Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International Public License,
+  a copy of which has been included with this distribution in the LICENSE.txt file.
+-->
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	
+	<flow name="scatterGather" doc:id="510dfbe7-63fc-4802-82f3-657511b4fd39">
+		<http:listener doc:name="/testing/scatterGather" doc:id="5de246e5-a885-4cd5-b069-dc2b8e9db1c6" config-ref="HTTP_Listener_config" path="/testing/scatterGather" />
+		<logger level="INFO" doc:name="start" doc:id="e7953ef6-d657-4daa-acd3-b5f639bb9993" message="start" category="com.mulesoft.training.testing-playground.scatterGather" />
+		<scatter-gather doc:name="Scatter-Gather" doc:id="11574ea9-3ee7-4949-93da-e1f41e9223ca">
+			<route>
+				<logger level="INFO" doc:name="Route 0 is called" doc:id="e79486ea-1bdb-4dcf-8f7c-b752af39ef14" message="Route 0 is called" category="testing-playground.scatterGatherExample.0" />
+				<set-payload value="#[123]" doc:name="123" doc:id="2947b453-b9b4-475d-bcbb-875167498858" />
+			</route>
+			<route>
+				<logger level="INFO" doc:name="Route 1 is called" doc:id="365d4176-45d9-42ec-917b-a3dcb3e14343" message="Route 1 is called" category="testing-playground.scatterGatherExample.1" />
+				<set-payload value="#[42]" doc:name="42" doc:id="65e17d38-a24a-4446-909b-b5b5b25d1ff4" />
+			</route>
+		</scatter-gather>
+		<ee:transform doc:name="calculate the sum" doc:id="70d1e2dd-0ee6-42fa-8fc0-7db309b9417e">
+			<ee:message>
+				<ee:set-payload><![CDATA[%dw 2.0
+output text/plain
+---
+sum(payload..payload)]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="end" doc:id="3a716056-0865-456e-92c6-f946a8e96ed7" message="end" category="com.mulesoft.training.testing-playground.scatterGather" />
+	</flow>
+	<flow name="errorHandlerForHTTPCall" doc:id="c7109d54-b135-49ca-8a7f-43a7b134a5b0">
+		<http:listener doc:name="/testing/errorHandlerForHTTPCall" doc:id="f4ffa2eb-e8df-4a3f-88dd-eeb4f85a572d" config-ref="HTTP_Listener_config" path="/testing/errorHandlerForHTTPCall" />
+		<logger level="INFO" doc:name="About to call out to a web server!" doc:id="3e3b241b-ff61-4ed2-8825-dfcbb96183e0" message="About to call out to a web server!" category="com.mulesoft.training.testing-playground.errorHandlerForHTTPCall" />
+		<http:request method="GET" doc:name="GET the MuleSoft homepage" doc:id="8725dea0-fba6-4baa-a344-c5fdac4cece4" config-ref="MuleSoft_HTTP_Request_configuration" path="/" />
+		<logger level="INFO" doc:name="Print out what status code comes back" doc:id="a052d1a8-f312-42d1-a43e-4c05f0077998" message='#["The status code is " ++ attributes.statusCode]' category="com.mulesoft.training.testing-playground.errorHandlerForHTTPCall" />
+		<error-handler>
+			<on-error-continue enableNotifications="true" logException="true" doc:name="On Error Continue" doc:id="2cc3ced8-b789-4454-9b5f-748b2d8b4027" type="ANY">
+				<logger level="ERROR" doc:name="Print out an error" doc:id="d0fbf846-a320-4526-957e-c72e2196e49c" message='#["There was an error " ++ (error.description default "")]' category="com.mulesoft.training.testing-playground.errorHandlerForHTTPCall.error" />
+			</on-error-continue>
+		</error-handler>
+	</flow>
+	<flow name="choiceOf3Paths" doc:id="b3ddee6c-3b1c-4774-a62f-e0aba8368724" >
+		<http:listener doc:name="/testing/choiceOf3Paths" doc:id="f9653238-855b-4504-b434-ea04eca63792" config-ref="HTTP_Listener_config" path="/testing/choiceOf3Paths"/>
+		<logger level="INFO" doc:name="start" doc:id="4083249f-5d22-46ad-bcdb-d1cf0ece43ca" message="start" category="com.mulesoft.training.testing-playground.choiceOf3Paths"/>
+		<choice doc:name="Choice" doc:id="1a8dc9ad-3327-47ad-bf74-6eae0f611509" >
+			<when expression='#[payload == "hello"]'>
+				<set-payload value='#["Hello back!"]' doc:name="Hello back!" doc:id="1ea83e84-2304-4877-a86b-609b498dba11" />
+			</when>
+			<when expression='#[payload == "goodbye"]'>
+				<set-payload value='#["Goodbye!"]' doc:name="Goodbye!" doc:id="f436d6ab-ab97-4c64-a8b0-c59b08a2cd14" />
+			</when>
+			<otherwise >
+				<set-payload value='#["I do not understand that"]' doc:name="I do not understand that" doc:id="a60f90ce-ad57-41ce-97b9-cc28091d39b8" />
+			</otherwise>
+		</choice>
+		<logger level="INFO" doc:name="end" doc:id="ac418049-df53-4893-b91d-6efd5e8d8375" message="end" category="com.mulesoft.training.testing-playground.choiceOf3Paths" />
+	</flow>
+	
+	
+	
+</mule>
